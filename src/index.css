@@ -1,14 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Manrope', 'Outfit', ui-sans-serif, sans-serif;
 }
 
 @layer base {
   :root {
     color-scheme: light;
+    --color-text: #1b1635;
+    --color-muted: #756f94;
+    --color-surface: rgba(255, 255, 255, 0.82);
+    --color-stroke: rgba(108, 77, 246, 0.14);
+    --color-primary: #6c4df6;
+    --shadow-card: 0 30px 90px -42px rgba(91, 56, 242, 0.45);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -27,10 +33,11 @@
     margin: 0;
     min-height: 100vh;
     background:
-      radial-gradient(circle at top left, rgba(45, 212, 191, 0.2), transparent 28%),
-      radial-gradient(circle at top right, rgba(251, 191, 36, 0.2), transparent 26%),
-      linear-gradient(180deg, #fffaf2 0%, #f4f8ff 100%);
-    color: #0f172a;
+      radial-gradient(circle at 15% 18%, rgba(151, 123, 255, 0.22), transparent 22%),
+      radial-gradient(circle at 85% 12%, rgba(255, 214, 232, 0.45), transparent 24%),
+      radial-gradient(circle at 70% 80%, rgba(255, 231, 197, 0.34), transparent 20%),
+      linear-gradient(180deg, #f5f0ff 0%, #f1f6ff 100%);
+    color: var(--color-text);
     font-family: var(--font-sans);
   }
 
@@ -50,39 +57,269 @@
 }
 
 @layer components {
-  .glass-panel {
-    @apply rounded-[30px] border border-white/70 bg-white/80 shadow-[0_30px_80px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl;
+  .app-noise {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 9999px;
+    filter: blur(70px);
   }
 
-  .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.35em] text-teal-700;
+  .app-noise-one {
+    top: -5rem;
+    right: -4rem;
+    height: 18rem;
+    width: 18rem;
+    background: rgba(120, 96, 255, 0.16);
   }
 
-  .panel-title {
-    @apply font-display text-[1.55rem] font-bold leading-tight text-slate-950;
+  .app-noise-two {
+    bottom: 8rem;
+    left: -5rem;
+    height: 20rem;
+    width: 20rem;
+    background: rgba(255, 198, 228, 0.18);
+  }
+
+  main > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .surface-card {
+    @apply rounded-[32px] border backdrop-blur-xl;
+    background: var(--color-surface);
+    border-color: var(--color-stroke);
+    box-shadow: var(--shadow-card);
+  }
+
+  .panel-fade {
+    animation: panel-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  .section-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.28em];
+    color: #8177af;
+  }
+
+  .section-title {
+    @apply font-display text-[1.55rem] font-extrabold leading-tight text-[#1b1635];
   }
 
   .field-label {
-    @apply text-sm font-semibold text-slate-700;
+    @apply text-sm font-semibold;
+    color: var(--color-muted);
   }
 
   .field-base {
-    @apply mt-2 w-full rounded-[22px] border border-slate-200 bg-white/90 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100;
+    @apply mt-2 w-full rounded-[22px] border px-4 py-3 text-[15px] outline-none transition;
+    color: var(--color-text);
+    background: rgba(250, 248, 255, 0.96);
+    border-color: rgba(108, 77, 246, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .field-base::placeholder {
+    color: #a198c8;
+  }
+
+  .field-base:focus {
+    border-color: rgba(108, 77, 246, 0.45);
+    box-shadow: 0 0 0 4px rgba(108, 77, 246, 0.12);
   }
 
   .primary-button {
-    @apply inline-flex items-center justify-center rounded-[20px] bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_35px_-20px_rgba(15,23,42,0.95)] transition hover:-translate-y-0.5 hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-100 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-[20px] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 focus:outline-none;
+    background: linear-gradient(135deg, #7b61ff 0%, #5b38f2 100%);
+    box-shadow: 0 18px 34px -18px rgba(91, 56, 242, 0.85);
   }
 
   .secondary-button {
-    @apply inline-flex items-center justify-center rounded-[20px] border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-100;
+    @apply inline-flex items-center justify-center rounded-[20px] border px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 focus:outline-none;
+    border-color: rgba(108, 77, 246, 0.14);
+    background: rgba(242, 238, 255, 0.9);
+    color: #5b3de3;
+  }
+
+  .ghost-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-[20px] border px-4 py-3 text-sm font-semibold transition hover:-translate-y-0.5 focus:outline-none;
+    border-color: rgba(108, 77, 246, 0.14);
+    background: rgba(255, 255, 255, 0.72);
+    color: #6e6790;
   }
 
   .danger-button {
-    @apply inline-flex items-center justify-center rounded-[20px] border border-rose-200 bg-rose-50 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:-translate-y-0.5 hover:bg-rose-100 focus:outline-none focus:ring-4 focus:ring-rose-100;
+    @apply inline-flex items-center justify-center rounded-[20px] border px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 focus:outline-none;
+    border-color: rgba(210, 77, 117, 0.16);
+    background: rgba(255, 241, 245, 0.96);
+    color: #d24d75;
   }
 
-  .tiny-button {
-    @apply inline-flex items-center rounded-2xl border border-transparent px-3 py-2 text-sm font-semibold transition;
+  .stat-card {
+    @apply rounded-[26px] border p-4 backdrop-blur-sm;
+    box-shadow: 0 22px 34px -30px rgba(77, 57, 173, 0.65);
+  }
+
+  .soft-icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-[18px] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)];
+  }
+
+  .mini-pill {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold;
+    border-color: rgba(108, 77, 246, 0.14);
+    background: rgba(250, 248, 255, 0.92);
+    color: #6e6790;
+  }
+
+  .hero-card {
+    @apply rounded-[36px] border text-white;
+    background:
+      radial-gradient(circle at top right, rgba(255, 214, 232, 0.28), transparent 25%),
+      linear-gradient(135deg, #7b61ff 0%, #5d3bf2 52%, #28115a 100%);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 42px 100px -46px rgba(44, 18, 118, 0.9);
+  }
+
+  .hero-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.3em] text-white/70;
+  }
+
+  .hero-primary-button {
+    @apply inline-flex items-center justify-center rounded-[20px] px-5 py-3 text-sm font-semibold text-[#1b1635] transition hover:-translate-y-0.5;
+    background: #fff;
+    box-shadow: 0 18px 30px -18px rgba(255, 255, 255, 0.65);
+  }
+
+  .hero-date-field {
+    @apply inline-flex items-center gap-3 rounded-[20px] border px-4 py-3 text-sm font-semibold;
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+  }
+
+  .hero-date-field input {
+    min-width: 10rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: inherit;
+  }
+
+  .hero-date-field input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.8;
+    filter: invert(1);
+  }
+
+  .progress-ring {
+    height: 10rem;
+    width: 10rem;
+    padding: 0.7rem;
+    border-radius: 9999px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 25px 50px -34px rgba(9, 3, 31, 0.75);
+  }
+
+  .progress-ring__inner {
+    @apply flex h-full w-full flex-col items-center justify-center rounded-full;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+  }
+
+  .hero-mini-card {
+    @apply rounded-[24px] border p-4;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .hero-chip {
+    @apply flex items-center justify-between rounded-[22px] border px-4 py-3 text-sm;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .hero-chip strong {
+    @apply font-display text-lg font-extrabold text-white;
+  }
+
+  .date-chip {
+    @apply flex min-h-[132px] flex-col items-center justify-center rounded-[28px] border px-3 py-5 text-center transition hover:-translate-y-0.5;
+    border-color: rgba(108, 77, 246, 0.12);
+    background: rgba(250, 248, 255, 0.8);
+    color: #756f94;
+  }
+
+  .date-chip-active {
+    background: linear-gradient(180deg, #7b61ff 0%, #5b38f2 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 30px 50px -30px rgba(91, 56, 242, 0.8);
+  }
+
+  .task-card {
+    @apply rounded-[30px] border p-5;
+    border-color: rgba(108, 77, 246, 0.12);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 245, 255, 0.94) 100%);
+    box-shadow: 0 24px 50px -36px rgba(77, 57, 173, 0.45);
+    animation: panel-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .task-check-button {
+    @apply flex h-[3.25rem] w-[3.25rem] shrink-0 items-center justify-center rounded-[22px] border transition hover:-translate-y-0.5;
+    border-color: rgba(108, 77, 246, 0.16);
+    background: #f5f1ff;
+    color: #6c4df6;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .task-check-button:hover {
+    border-color: rgba(108, 77, 246, 0.28);
+    background: #ece6ff;
+  }
+
+  .priority-option {
+    @apply rounded-[20px] border px-3 py-3 text-sm font-semibold transition;
+  }
+
+  .priority-option-active {
+    transform: translateY(-2px);
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #7b61ff 0%, #5b38f2 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 18px 32px -20px rgba(91, 56, 242, 0.9);
+  }
+
+  .list-card {
+    @apply rounded-[26px] border p-4;
+    box-shadow: 0 18px 38px -32px rgba(77, 57, 173, 0.4);
+  }
+}
+
+@media (max-width: 640px) {
+  .progress-ring {
+    margin-inline: auto;
+    height: 8.75rem;
+    width: 8.75rem;
+  }
+
+  .hero-date-field input {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
