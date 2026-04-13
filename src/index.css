@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(45, 212, 191, 0.2), transparent 28%),
+      radial-gradient(circle at top right, rgba(251, 191, 36, 0.2), transparent 26%),
+      linear-gradient(180deg, #fffaf2 0%, #f4f8ff 100%);
+    color: #0f172a;
+    font-family: var(--font-sans);
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-[30px] border border-white/70 bg-white/80 shadow-[0_30px_80px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.35em] text-teal-700;
+  }
+
+  .panel-title {
+    @apply font-display text-[1.55rem] font-bold leading-tight text-slate-950;
+  }
+
+  .field-label {
+    @apply text-sm font-semibold text-slate-700;
+  }
+
+  .field-base {
+    @apply mt-2 w-full rounded-[22px] border border-slate-200 bg-white/90 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center rounded-[20px] bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_35px_-20px_rgba(15,23,42,0.95)] transition hover:-translate-y-0.5 hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-100 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center rounded-[20px] border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-100;
+  }
+
+  .danger-button {
+    @apply inline-flex items-center justify-center rounded-[20px] border border-rose-200 bg-rose-50 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:-translate-y-0.5 hover:bg-rose-100 focus:outline-none focus:ring-4 focus:ring-rose-100;
+  }
+
+  .tiny-button {
+    @apply inline-flex items-center rounded-2xl border border-transparent px-3 py-2 text-sm font-semibold transition;
+  }
+}
