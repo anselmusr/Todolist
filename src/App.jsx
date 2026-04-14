@@ -136,6 +136,19 @@ function App() {
             />
           </Suspense>
         </div>
+
+        <footer className="app-footer">
+          <p className="app-footer-copy">
+            &copy; 2026{' '}
+            <a className="app-footer-link" href="mailto:anselmusrusdiatmaja">
+              Anselmus R
+            </a>
+            . All rights reserved. • Made with{' '}
+            <span className="app-footer-heart" aria-hidden="true">
+              ♥
+            </span>
+          </p>
+        </footer>
       </div>
     </main>
   )

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import { formatClock, formatCompactDate, formatDateTime } from '../utils/date'
 import { isOverdue } from '../utils/tasks'
 import {
@@ -38,6 +40,24 @@ export function CenterPanel({
   todayKey,
   todayTaskCount,
 }) {
+  const selectedDateChipRef = useRef(null)
+
+  useEffect(() => {
+    if (!selectedDateChipRef.current) {
+      return
+    }
+
+    if (!window.matchMedia('(max-width: 639px)').matches) {
+      return
+    }
+
+    selectedDateChipRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    })
+  }, [dateStrip, selectedDate])
+
   return (
     <section className="dashboard-stack">
       <section className="hero-card panel-fade panel-delay-100 dashboard-hero-section">
@@ -186,6 +206,7 @@ export function CenterPanel({
                 key={item.dateKey}
                 className={`date-chip ${isSelected ? 'date-chip-active' : ''}`}
                 type="button"
+                ref={isSelected ? selectedDateChipRef : null}
                 onClick={() => setSelectedDate(item.dateKey)}
               >
                 <span className="date-chip-label">{item.weekday}</span>

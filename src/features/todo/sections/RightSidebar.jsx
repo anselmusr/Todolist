@@ -107,8 +107,9 @@ export function RightSidebar({
             <p className="section-kicker">Overdue</p>
             <h2 className="section-title section-title-offset">Agenda yang terlambat</h2>
           </div>
-          <span className="mini-pill status-pill-overdue">
-            {overdueTasks.length} item
+          <span className="mini-pill status-pill status-pill-overdue">
+            <span className="status-pill-count">{overdueTasks.length}</span>
+            <span className="status-pill-label">item</span>
           </span>
         </div>
 
@@ -162,8 +163,9 @@ export function RightSidebar({
             <p className="section-kicker">Done</p>
             <h2 className="section-title section-title-offset">Daftar yang selesai</h2>
           </div>
-          <span className="mini-pill status-pill-done">
-            {doneTasks.length} selesai
+          <span className="mini-pill status-pill status-pill-done">
+            <span className="status-pill-count">{doneTasks.length}</span>
+            <span className="status-pill-label">selesai</span>
           </span>
         </div>
 

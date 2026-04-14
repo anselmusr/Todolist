@@ -11,6 +11,29 @@
     @apply grid gap-6 xl:grid-cols-[290px_minmax(0,1fr)_360px];
   }
 
+  .app-footer {
+    @apply mt-8 pb-2 text-center;
+  }
+
+  .app-footer-copy {
+    @apply text-sm leading-6;
+    color: #6f6890;
+  }
+
+  .app-footer-link {
+    color: #4a77d2;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .app-footer-link:hover {
+    color: #315ebe;
+  }
+
+  .app-footer-heart {
+    color: #f04d74;
+  }
+
   .fallback-stack,
   .sidebar-stack,
   .dashboard-stack {
@@ -352,31 +375,21 @@
     color: #1b1635;
   }
 
-  .profile-summary-layout {
-    @apply flex items-center gap-4;
-  }
-
-  .profile-copy {
-    @apply min-w-0;
-  }
-
-  .profile-name {
-    @apply truncate font-display text-xl font-extrabold;
-    color: #1b1635;
-  }
-
-  .profile-role {
-    @apply mt-1 truncate text-sm;
-    color: #746d95;
-  }
-
-  .profile-description {
-    @apply mt-4 text-sm leading-6;
-    color: #756f94;
+  .profile-toolbar {
+    @apply mt-5 flex justify-center;
   }
 
   .profile-field-stack {
     @apply mt-6 space-y-4;
+  }
+
+  .profile-edit-row {
+    @apply mt-4 flex items-center justify-center gap-3;
+  }
+
+  .profile-edit-hint {
+    @apply text-center text-sm leading-6;
+    color: #7a729c;
   }
 
   .profile-summary-grid {
@@ -477,11 +490,11 @@
   }
 
   .hero-chip-grid {
-    @apply mt-5 grid gap-3 sm:grid-cols-3;
+    @apply mt-5 grid grid-cols-3 gap-3 lg:hidden;
   }
 
   .dashboard-summary-grid {
-    @apply mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3;
+    @apply mt-6 hidden gap-4 sm:grid sm:grid-cols-2 xl:grid-cols-3;
   }
 
   .agenda-header {
@@ -498,7 +511,15 @@
   }
 
   .date-strip-grid {
-    @apply mt-6 grid gap-3 sm:grid-cols-5;
+    @apply mt-6 grid grid-flow-col gap-3 overflow-x-auto pb-2 pr-1 sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-5 sm:overflow-visible sm:pb-0 sm:pr-0;
+    grid-auto-columns: calc((100% - 1.5rem) / 3);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .date-strip-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .date-chip-label {
@@ -556,15 +577,32 @@
   }
 
   .status-pill-overdue {
+    @apply min-w-[3.35rem];
     border-color: #ffe3c4;
     background: #fff5e9;
     color: #c87021;
   }
 
   .status-pill-done {
+    @apply min-w-[4.6rem];
     border-color: #d7f5ea;
     background: #effcf7;
     color: #17835c;
+  }
+
+  .status-pill {
+    @apply flex-col justify-center gap-0 px-3 pb-2 pt-3 text-center;
+    min-height: 3.15rem;
+    line-height: 1;
+  }
+
+  .status-pill-count {
+    @apply block font-display text-sm font-extrabold leading-none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .status-pill-label {
+    @apply mt-1 block text-[11px] font-semibold leading-none;
   }
 
   .status-list-overdue {
