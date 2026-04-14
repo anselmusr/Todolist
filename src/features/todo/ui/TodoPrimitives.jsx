@@ -73,7 +73,7 @@ export function SummaryTile({ label, value, detail, tone = 'violet' }) {
         : 'border-[#ddd3ff] bg-[#f2eeff] text-[#5b3de3]'
 
   return (
-    <article className={`stat-card ${toneClassName}`}>
+    <article className={`stat-card h-full ${toneClassName}`}>
       <p className="text-[11px] font-semibold uppercase tracking-[0.22em] opacity-75">
         {label}
       </p>

@@ -26,13 +26,9 @@ export function LeftSidebar({
       >
         <div className="flex items-center justify-between">
           <div>
-            <p className="section-kicker">Premium UI Kit</p>
             <h1 className="mt-2 font-display text-[1.75rem] font-extrabold leading-tight text-[#1b1635]">
               Task Management & To-do List App
             </h1>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f2eeff] text-[#6c4df6] shadow-[0_18px_30px_-24px_rgba(108,77,246,0.75)]">
-            <SparkIcon className="h-5 w-5" />
           </div>
         </div>
 

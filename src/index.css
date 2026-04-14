@@ -186,13 +186,13 @@
   }
 
   .hero-primary-button {
-    @apply inline-flex items-center justify-center rounded-[20px] px-5 py-3 text-sm font-semibold text-[#1b1635] transition hover:-translate-y-0.5;
+    @apply inline-flex min-h-14 items-center justify-center rounded-[20px] px-5 py-3 text-sm font-semibold text-[#1b1635] transition hover:-translate-y-0.5;
     background: #fff;
     box-shadow: 0 18px 30px -18px rgba(255, 255, 255, 0.65);
   }
 
   .hero-date-field {
-    @apply inline-flex items-center gap-3 rounded-[20px] border px-4 py-3 text-sm font-semibold;
+    @apply inline-flex min-h-14 items-center gap-3 rounded-[20px] border px-4 py-3 text-sm font-semibold;
     border-color: rgba(255, 255, 255, 0.16);
     background: rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.88);
@@ -236,14 +236,22 @@
   }
 
   .hero-chip {
-    @apply flex items-center justify-between rounded-[22px] border px-4 py-3 text-sm;
+    @apply flex min-h-16 flex-col items-center justify-center gap-1 rounded-[22px] border px-3 py-3 text-[12px] text-center;
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.75);
   }
 
+  .hero-chip span {
+    min-width: 0;
+    white-space: nowrap;
+    line-height: 1.1;
+  }
+
   .hero-chip strong {
-    @apply font-display text-lg font-extrabold text-white;
+    @apply shrink-0 font-display text-lg leading-none font-extrabold text-white;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   .date-chip {

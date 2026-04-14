@@ -32,9 +32,6 @@ export function RightSidebar({
               menekan submit.
             </p>
           </div>
-          <div className="soft-icon bg-[#f2eeff] text-[#6c4df6]">
-            <SparkIcon />
-          </div>
         </div>
 
         <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
