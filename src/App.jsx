@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 
 import { useTodoApp } from './features/todo/hooks/useTodoApp'
 import { CheckIcon, TrashIcon } from './features/todo/ui/TodoIcons'
@@ -237,6 +238,8 @@ function App() {
           text={todo.feedback.text}
         />
       )}
+
+      <Analytics />
     </main>
   )
 }
