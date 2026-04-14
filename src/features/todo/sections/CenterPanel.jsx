@@ -86,7 +86,6 @@ export function CenterPanel({
                 </button>
 
                 <label className="hero-date-field">
-                  <CalendarIcon />
                   <input
                     type="date"
                     value={selectedDate}
@@ -95,7 +94,7 @@ export function CenterPanel({
                 </label>
               </div>
 
-              {feedback && (
+              {feedback && feedback.surface !== 'toast' && (
                 <div className={`feedback-banner ${feedbackClassName}`}>
                   {feedback.text}
                 </div>

@@ -4,7 +4,7 @@ export const STORAGE_KEYS = {
 }
 
 export const DEFAULT_PROFILE = {
-  name: 'Anisa Putri',
+  name: 'Alexandra Rosemary',
   role: 'Mobile Productivity Planner',
 }
 

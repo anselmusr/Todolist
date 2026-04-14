@@ -1,17 +1,17 @@
 # Task Management & To-do List App
 
-A responsive to-do list app built with React and Vite. The UI is styled to feel closer to a modern mobile task management dashboard, while the core functionality stays simple and practical: create tasks, assign priorities, track overdue items, and review completed work.
+A responsive task dashboard built with React, Vite, and Tailwind CSS 4. The app focuses on a soft, mobile-inspired interface while keeping the workflow practical: create tasks, set priorities, track overdue items, review completed work, and manage everything locally in the browser.
 
-## Features
+## Highlights
 
-- Create tasks with title, due date, and priority
-- Persist profile and tasks in `localStorage`
-- Filter tasks by selected date
-- Mark tasks as done and move them to the `Done` panel
-- Highlight overdue tasks automatically
-- Delete individual tasks or clear all tasks with confirmation
-- Responsive dashboard layout for desktop and mobile
-- Lazy-loaded section components for lighter initial loading
+- Add tasks with title, due date, and priority
+- Filter tasks by selected date through the center dashboard strip
+- Mark tasks as done and move them automatically to the `Done` panel
+- Track overdue tasks in a dedicated status panel
+- Edit profile data and persist it in `localStorage`
+- Delete single tasks, or delete all tasks with a custom confirmation modal
+- Show toast feedback after create, complete, delete, and clear-all actions
+- Responsive layout tuned for desktop and mobile
 
 ## Tech Stack
 
@@ -23,25 +23,40 @@ A responsive to-do list app built with React and Vite. The UI is styled to feel 
 ## Project Structure
 
 ```text
+public/
+|-- favicon.ico
+`-- icons.svg
+
 src/
 |-- App.jsx
 |-- index.css
 |-- main.jsx
-`-- features/
-    `-- todo/
-        |-- constants.js
-        |-- hooks/
-        |   `-- useTodoApp.js
-        |-- sections/
-        |   |-- LeftSidebar.jsx
-        |   |-- CenterPanel.jsx
-        |   `-- RightSidebar.jsx
-        |-- ui/
-        |   |-- TodoIcons.jsx
-        |   `-- TodoPrimitives.jsx
-        `-- utils/
-            |-- date.js
-            `-- tasks.js
+|-- assets/
+|   |-- hero.png
+|   |-- react.svg
+|   `-- vite.svg
+|-- features/
+|   `-- todo/
+|       |-- constants.js
+|       |-- hooks/
+|       |   `-- useTodoApp.js
+|       |-- sections/
+|       |   |-- LeftSidebar.jsx
+|       |   |-- CenterPanel.jsx
+|       |   `-- RightSidebar.jsx
+|       |-- ui/
+|       |   |-- TodoIcons.jsx
+|       |   `-- TodoPrimitives.jsx
+|       `-- utils/
+|           |-- date.js
+|           `-- tasks.js
+`-- styles/
+    |-- base.css
+    |-- components.css
+    |-- dashboard.css
+    |-- forms.css
+    |-- layout.css
+    `-- motion.css
 ```
 
 ## Getting Started
@@ -58,7 +73,7 @@ npm install
 npm run dev
 ```
 
-If you are using PowerShell on Windows and see an execution policy error for `npm.ps1`, use:
+If you use PowerShell on Windows and hit an execution-policy issue for `npm.ps1`, run:
 
 ```powershell
 npm.cmd run dev
@@ -76,27 +91,27 @@ npm run build
 npm run preview
 ```
 
-## Available Scripts
+## Scripts
 
 - `npm run dev` starts the Vite dev server
-- `npm run build` creates the production build in `dist/`
+- `npm run build` creates the production bundle in `dist/`
 - `npm run preview` serves the production build locally
 - `npm run lint` runs ESLint
 
 ## Architecture Notes
 
-- `useTodoApp` is the main feature hook that owns state, persistence, derived task lists, and action handlers.
-- `sections/` contains the three main dashboard areas.
-- `ui/` contains reusable presentational pieces such as badges, empty states, progress ring, and icons.
-- `utils/` contains helpers for date formatting, local storage normalization, and task sorting.
+- `useTodoApp` is the central hook for state, persistence, derived task lists, feedback state, and action handlers.
+- `sections/` contains the three main dashboard columns.
+- `ui/` contains reusable presentational pieces such as badges, icons, empty states, progress ring, and summary tiles.
+- `styles/` separates shared layout, dashboard-specific styling, form styles, motion, and component utilities.
 
-## Data Persistence
+## Persistence
 
-This app stores profile and task data in the browser using `localStorage`, so your data remains available after refresh without requiring a backend.
+Task data and profile data are stored in `localStorage`, so the dashboard keeps its state after refresh without requiring a backend.
 
 ## Verification
 
-The project is expected to pass:
+Recommended local checks:
 
 ```bash
 npm run lint

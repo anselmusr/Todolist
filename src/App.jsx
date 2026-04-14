@@ -1,6 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 
 import { useTodoApp } from './features/todo/hooks/useTodoApp'
+import { CheckIcon, TrashIcon } from './features/todo/ui/TodoIcons'
 
 const LeftSidebar = lazy(() =>
   import('./features/todo/sections/LeftSidebar').then((module) => ({
@@ -68,9 +69,87 @@ function CenterFallback() {
   )
 }
 
+function DeleteAllDialog({ taskCount, onCancel, onConfirm }) {
+  return (
+    <div className="confirm-dialog-overlay" onClick={onCancel}>
+      <div
+        className="confirm-dialog surface-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-all-dialog-title"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="confirm-dialog-icon">
+          <TrashIcon className="icon-md" />
+        </div>
+        <p className="confirm-dialog-kicker">Delete Tasks</p>
+        <h2 className="confirm-dialog-title" id="delete-all-dialog-title">
+          Hapus semua tugas?
+        </h2>
+        <p className="confirm-dialog-copy">
+          <span className="confirm-dialog-emphasis">{taskCount} agenda</span>{' '}
+          akan dihapus permanen dari daftar dan penyimpanan browser.
+        </p>
+
+        <div className="confirm-dialog-actions">
+          <button className="ghost-button button-full" type="button" onClick={onCancel}>
+            Batal
+          </button>
+          <button className="danger-button button-full" type="button" onClick={onConfirm}>
+            Hapus semua
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function FeedbackToast({ text, title, tone = 'success' }) {
+  const icon =
+    tone === 'danger' ? <TrashIcon className="icon-md" /> : <CheckIcon className="icon-md" />
+
+  return (
+    <div className="feedback-toast-wrap" role="status" aria-live="polite">
+      <div className={`feedback-toast feedback-toast-${tone}`}>
+        <div className={`feedback-toast-icon feedback-toast-icon-${tone}`}>
+          {icon}
+        </div>
+
+        <div className="feedback-toast-copy">
+          <p className="feedback-toast-title">{title}</p>
+          <p className="feedback-toast-text">{text}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // App hanya merakit tiga panel besar; seluruh logika bisnis tetap tinggal di hook feature.
 function App() {
   const todo = useTodoApp()
+
+  useEffect(() => {
+    if (!todo.isDeleteAllDialogOpen) {
+      return undefined
+    }
+
+    const previousOverflow = document.body.style.overflow
+
+    document.body.style.overflow = 'hidden'
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        todo.closeDeleteAllDialog()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [todo.closeDeleteAllDialog, todo.isDeleteAllDialogOpen])
 
   return (
     <main className="app-shell">
@@ -81,17 +160,11 @@ function App() {
         <div className="app-grid">
           <Suspense fallback={<SidebarFallback />}>
             <LeftSidebar
-              activeProfileName={todo.activeProfileName}
-              activeProfileRole={todo.activeProfileRole}
               activeTasksCount={todo.activeTasks.length}
               doneTasksCount={todo.doneTasks.length}
               handleDeleteAll={todo.handleDeleteAll}
               nextTask={todo.nextTask}
               profile={todo.profile}
-              selectedDate={todo.selectedDate}
-              setSelectedDate={todo.setSelectedDate}
-              syncFormDueDate={todo.syncFormDueDate}
-              todayKey={todo.todayKey}
               updateProfile={todo.updateProfile}
             />
           </Suspense>
@@ -128,10 +201,8 @@ function App() {
               handleDeleteTask={todo.handleDeleteTask}
               handleSubmit={todo.handleSubmit}
               overdueTasks={todo.overdueTasks}
-              selectedDate={todo.selectedDate}
               setSelectedDate={todo.setSelectedDate}
               syncFormDueDate={todo.syncFormDueDate}
-              todayKey={todo.todayKey}
               updateForm={todo.updateForm}
             />
           </Suspense>
@@ -150,6 +221,22 @@ function App() {
           </p>
         </footer>
       </div>
+
+      {todo.isDeleteAllDialogOpen && (
+        <DeleteAllDialog
+          taskCount={todo.totalTasksCount}
+          onCancel={todo.closeDeleteAllDialog}
+          onConfirm={todo.confirmDeleteAll}
+        />
+      )}
+
+      {todo.feedback?.surface === 'toast' && (
+        <FeedbackToast
+          tone={todo.feedback.tone}
+          title={todo.feedback.title ?? 'Berhasil'}
+          text={todo.feedback.text}
+        />
+      )}
     </main>
   )
 }

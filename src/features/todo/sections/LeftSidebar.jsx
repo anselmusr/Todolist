@@ -11,10 +11,6 @@ export function LeftSidebar({
   handleDeleteAll,
   nextTask,
   profile,
-  selectedDate,
-  setSelectedDate,
-  syncFormDueDate,
-  todayKey,
   updateProfile,
 }) {
   const isProfileComplete = Boolean(profile.name.trim() && profile.role.trim())
@@ -134,23 +130,6 @@ export function LeftSidebar({
         </div>
 
         <div className="focus-action-stack">
-          <button
-            className="secondary-button button-full"
-            type="button"
-            onClick={() => {
-              setSelectedDate(todayKey)
-              syncFormDueDate(todayKey)
-            }}
-          >
-            Gunakan hari ini
-          </button>
-          <button
-            className="ghost-button button-full"
-            type="button"
-            onClick={() => syncFormDueDate(selectedDate)}
-          >
-            Samakan tanggal form dengan filter
-          </button>
           <button
             className="danger-button button-full"
             type="button"

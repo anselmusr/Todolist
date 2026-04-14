@@ -14,10 +14,8 @@ export function RightSidebar({
   handleDeleteTask,
   handleSubmit,
   overdueTasks,
-  selectedDate,
   setSelectedDate,
   syncFormDueDate,
-  todayKey,
   updateForm,
 }) {
   return (
@@ -81,22 +79,6 @@ export function RightSidebar({
             <button className="primary-button button-full" type="submit">
               Submit task
             </button>
-            <div className="button-grid-two">
-              <button
-                className="secondary-button button-center"
-                type="button"
-                onClick={() => syncFormDueDate(todayKey)}
-              >
-                Hari ini
-              </button>
-              <button
-                className="ghost-button button-center"
-                type="button"
-                onClick={() => syncFormDueDate(selectedDate)}
-              >
-                Pakai filter
-              </button>
-            </div>
           </div>
         </form>
       </section>

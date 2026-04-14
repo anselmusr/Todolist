@@ -36,6 +36,7 @@ export function useTodoApp() {
     priority: 'medium',
   }))
   const [feedback, setFeedback] = useState(null)
+  const [isDeleteAllDialogOpen, setIsDeleteAllDialogOpen] = useState(false)
 
   // Jam di hero cukup diperbarui periodik agar terasa hidup tanpa rerender tiap detik.
   useEffect(() => {
@@ -145,7 +146,9 @@ export function useTodoApp() {
       priority: 'medium',
     })
     setFeedback({
+      surface: 'toast',
       tone: 'success',
+      title: 'Task berhasil ditambahkan',
       text: `Agenda baru tersimpan untuk ${formatDate(taskDate)}.`,
     })
   }
@@ -153,6 +156,8 @@ export function useTodoApp() {
   // Status selesai cukup diubah lewat flag; panel Done akan otomatis ikut terbarui
   // karena dihitung dari state yang sama.
   function handleToggleTask(taskId) {
+    const completedTask = tasks.find((task) => task.id === taskId)
+
     setTasks((currentTasks) =>
       currentTasks.map((task) =>
         task.id === taskId
@@ -166,16 +171,26 @@ export function useTodoApp() {
     )
 
     setFeedback({
+      surface: 'toast',
       tone: 'success',
-      text: 'Tugas selesai dan dipindahkan ke kolom Done.',
+      title: 'Tugas selesai',
+      text: completedTask
+        ? `"${completedTask.title}" dipindahkan ke kolom Done.`
+        : 'Tugas selesai dan dipindahkan ke kolom Done.',
     })
   }
 
   function handleDeleteTask(taskId) {
+    const deletedTask = tasks.find((task) => task.id === taskId)
+
     setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId))
     setFeedback({
+      surface: 'toast',
       tone: 'danger',
-      text: 'Satu agenda berhasil dihapus dari daftar.',
+      title: 'Tugas dihapus',
+      text: deletedTask
+        ? `"${deletedTask.title}" berhasil dihapus dari daftar.`
+        : 'Satu agenda berhasil dihapus dari daftar.',
     })
   }
 
@@ -189,18 +204,23 @@ export function useTodoApp() {
       return
     }
 
-    const hasConfirmed = window.confirm(
-      'Hapus seluruh to do list yang sudah dibuat?',
-    )
+    setIsDeleteAllDialogOpen(true)
+  }
 
-    if (!hasConfirmed) {
-      return
-    }
+  function closeDeleteAllDialog() {
+    setIsDeleteAllDialogOpen(false)
+  }
+
+  function confirmDeleteAll() {
+    const deletedTasksCount = tasks.length
 
     setTasks([])
+    setIsDeleteAllDialogOpen(false)
     setFeedback({
-      tone: 'danger',
-      text: 'Semua agenda berhasil dihapus.',
+      surface: 'toast',
+      tone: 'success',
+      title: 'Semua tugas dihapus',
+      text: `${deletedTasksCount} agenda berhasil dihapus dari daftar.`,
     })
   }
 
@@ -219,6 +239,7 @@ export function useTodoApp() {
         )
       : 0
   const nextTask = activeTasks[0] ?? null
+  const totalTasksCount = tasks.length
   const feedbackClassName = feedback
     ? FEEDBACK_CLASS_NAMES[feedback.tone]
     : FEEDBACK_CLASS_NAMES.warning
@@ -228,15 +249,18 @@ export function useTodoApp() {
     activeProfileRole,
     activeTasks,
     completionRate,
+    closeDeleteAllDialog,
     dateStrip,
     doneTasks,
     feedback,
     feedbackClassName,
     form,
+    confirmDeleteAll,
     handleDeleteAll,
     handleDeleteTask,
     handleSubmit,
     handleToggleTask,
+    isDeleteAllDialogOpen,
     nextTask,
     now,
     overdueTasks,
@@ -250,6 +274,7 @@ export function useTodoApp() {
     syncFormDueDate,
     todayKey,
     todayTaskCount,
+    totalTasksCount,
     updateForm,
     updateProfile,
   }

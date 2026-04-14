@@ -23,16 +23,28 @@ coverage
 # Cache and temp files
 .eslintcache
 .cache
+.parcel-cache
+.sass-cache
+.temp
+.tmp
 tmp
 temp
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.tsbuildinfo
 
 # OS files
 Thumbs.db
+Desktop.ini
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
+.history
 .DS_Store
 *.suo
 *.ntvs*
