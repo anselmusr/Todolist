@@ -1,0 +1,59 @@
+@layer components {
+  .panel-fade {
+    animation: panel-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  .panel-delay-60 {
+    --delay: 60ms;
+  }
+
+  .panel-delay-100 {
+    --delay: 100ms;
+  }
+
+  .panel-delay-120 {
+    --delay: 120ms;
+  }
+
+  .panel-delay-140 {
+    --delay: 140ms;
+  }
+
+  .panel-delay-160 {
+    --delay: 160ms;
+  }
+
+  .panel-delay-200 {
+    --delay: 200ms;
+  }
+
+  .panel-delay-240 {
+    --delay: 240ms;
+  }
+}
+
+@media (max-width: 640px) {
+  .progress-ring {
+    margin-inline: auto;
+    height: 8.75rem;
+    width: 8.75rem;
+  }
+
+  .hero-date-field input {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

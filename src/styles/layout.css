@@ -1,0 +1,117 @@
+@layer components {
+  .app-noise {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 9999px;
+    filter: blur(70px);
+  }
+
+  .app-noise-one {
+    top: -5rem;
+    right: -4rem;
+    height: 18rem;
+    width: 18rem;
+    background: rgba(120, 96, 255, 0.16);
+  }
+
+  .app-noise-two {
+    bottom: 8rem;
+    left: -5rem;
+    height: 20rem;
+    width: 20rem;
+    background: rgba(255, 198, 228, 0.18);
+  }
+
+  main > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .surface-card {
+    @apply rounded-[32px] border backdrop-blur-xl;
+    background: var(--color-surface);
+    border-color: var(--color-stroke);
+    box-shadow: var(--shadow-card);
+  }
+
+  .section-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.28em];
+    color: #8177af;
+  }
+
+  .section-title {
+    @apply font-display text-[1.55rem] font-extrabold leading-tight text-[#1b1635];
+  }
+
+  .stat-card {
+    @apply rounded-[26px] border p-4 backdrop-blur-sm;
+    box-shadow: 0 22px 34px -30px rgba(77, 57, 173, 0.65);
+  }
+
+  .soft-icon {
+    @apply flex h-11 w-11 items-center justify-center rounded-[18px] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)];
+  }
+
+  .mini-pill {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold;
+    border-color: rgba(108, 77, 246, 0.14);
+    background: rgba(250, 248, 255, 0.92);
+    color: #6e6790;
+  }
+
+  .list-card {
+    @apply rounded-[26px] border p-4;
+    box-shadow: 0 18px 38px -32px rgba(77, 57, 173, 0.4);
+  }
+
+  .profile-summary-card {
+    @apply mt-6 rounded-[28px] p-4;
+    background: linear-gradient(180deg, rgba(244, 240, 255, 0.95) 0%, rgba(255, 255, 255, 0.96) 100%);
+  }
+
+  .profile-avatar {
+    @apply flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-[24px] font-display text-xl font-extrabold text-white;
+    background: linear-gradient(135deg, #7b61ff 0%, #5b38f2 100%);
+    box-shadow: 0 24px 36px -24px rgba(91, 56, 242, 0.9);
+  }
+
+  .planner-focus-card {
+    @apply mt-5 rounded-[28px] border p-4;
+    border-color: #ebe4ff;
+    background: #faf8ff;
+  }
+
+  .hero-glass-card {
+    @apply relative flex h-full flex-col rounded-[32px] border p-5 backdrop-blur-md;
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 32px 80px -44px rgba(24, 10, 82, 0.8);
+  }
+
+  .hero-glass-orb {
+    @apply absolute rounded-full blur-3xl;
+  }
+
+  .hero-glass-orb-top {
+    @apply -right-10 top-10 h-28 w-28;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .hero-glass-orb-bottom {
+    @apply -left-12 bottom-0 h-36 w-36;
+    background: rgba(255, 204, 242, 0.2);
+  }
+
+  .hero-time-pill {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.22em];
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .done-check-icon {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-[18px] text-white;
+    background: #17835c;
+    box-shadow: 0 20px 28px -24px rgba(23, 131, 92, 0.9);
+  }
+}

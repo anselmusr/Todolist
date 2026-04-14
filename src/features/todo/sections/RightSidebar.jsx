@@ -1,6 +1,6 @@
 import { PRIORITY_META } from '../constants'
 import { formatCompactDate, formatDateTime } from '../utils/date'
-import { CheckIcon, SparkIcon } from '../ui/TodoIcons'
+import { CheckIcon } from '../ui/TodoIcons'
 import {
   EmptyState,
   PriorityBadge,
@@ -21,31 +21,31 @@ export function RightSidebar({
   updateForm,
 }) {
   return (
-    <aside className="space-y-6">
-      <section className="surface-card panel-fade p-6" style={{ '--delay': '140ms' }}>
-        <div className="flex items-start justify-between gap-3">
+    <aside className="sidebar-stack">
+      <section className="surface-card panel-fade panel-delay-140 right-sidebar-card">
+        <div className="section-heading-row section-heading-row-start">
           <div>
             <p className="section-kicker">Add Project</p>
-            <h2 className="section-title mt-2">Create a new task card</h2>
-            <p className="mt-2 text-sm leading-6 text-[#756f94]">
+            <h2 className="section-title section-title-offset">Create a new task card</h2>
+            <p className="panel-intro-copy">
               Masukkan agenda, pilih tanggal, lalu tentukan prioritas sebelum
               menekan submit.
             </p>
           </div>
         </div>
 
-        <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
-          <label className="block">
+        <form className="task-form-layout" onSubmit={handleSubmit}>
+          <label className="field-group">
             <span className="field-label">Task detail</span>
             <textarea
-              className="field-base resize-none"
+              className="field-base textarea-field"
               placeholder="Contoh: Selesaikan wireframe homepage untuk presentasi besok pagi."
               value={form.title}
               onChange={(event) => updateForm('title', event.target.value)}
             />
           </label>
 
-          <label className="block">
+          <label className="field-group">
             <span className="field-label">Due date</span>
             <input
               className="field-base"
@@ -57,7 +57,7 @@ export function RightSidebar({
 
           <div>
             <span className="field-label">Priority</span>
-            <div className="mt-3 grid grid-cols-3 gap-3">
+            <div className="priority-grid">
               {Object.entries(PRIORITY_META).map(([priorityKey, meta]) => {
                 const isSelected = form.priority === priorityKey
 
@@ -77,20 +77,20 @@ export function RightSidebar({
             </div>
           </div>
 
-          <div className="grid gap-3">
-            <button className="primary-button w-full justify-center" type="submit">
+          <div className="button-stack">
+            <button className="primary-button button-full" type="submit">
               Submit task
             </button>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="button-grid-two">
               <button
-                className="secondary-button justify-center"
+                className="secondary-button button-center"
                 type="button"
                 onClick={() => syncFormDueDate(todayKey)}
               >
                 Hari ini
               </button>
               <button
-                className="ghost-button justify-center"
+                className="ghost-button button-center"
                 type="button"
                 onClick={() => syncFormDueDate(selectedDate)}
               >
@@ -101,34 +101,34 @@ export function RightSidebar({
         </form>
       </section>
 
-      <section className="surface-card panel-fade p-6" style={{ '--delay': '200ms' }}>
-        <div className="flex items-end justify-between gap-3">
+      <section className="surface-card panel-fade panel-delay-200 right-sidebar-card">
+        <div className="section-heading-row section-heading-row-end">
           <div>
             <p className="section-kicker">Overdue</p>
-            <h2 className="section-title mt-2">Agenda yang terlambat</h2>
+            <h2 className="section-title section-title-offset">Agenda yang terlambat</h2>
           </div>
-          <span className="mini-pill border-[#ffe3c4] bg-[#fff5e9] text-[#c87021]">
+          <span className="mini-pill status-pill-overdue">
             {overdueTasks.length} item
           </span>
         </div>
 
-        <div className="mt-5 space-y-3 xl:max-h-[340px] xl:overflow-auto xl:pr-1">
+        <div className="status-list-overdue">
           {overdueTasks.length ? (
             overdueTasks.map((task) => (
-              <article key={task.id} className="list-card border-[#ffe8d4] bg-[#fff8ef]">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-semibold leading-6 text-[#1b1635]">{task.title}</p>
-                    <p className="mt-2 text-sm text-[#c87021]">
+              <article key={task.id} className="list-card overdue-task-card">
+                <div className="status-card-header">
+                  <div className="status-card-copy">
+                    <p className="overdue-task-title">{task.title}</p>
+                    <p className="overdue-task-date">
                       Deadline {formatCompactDate(task.dueDate)}
                     </p>
                   </div>
                   <PriorityBadge priority={task.priority} />
                 </div>
 
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="status-card-actions">
                   <button
-                    className="secondary-button justify-center"
+                    className="secondary-button button-center"
                     type="button"
                     onClick={() => {
                       setSelectedDate(task.dueDate)
@@ -138,7 +138,7 @@ export function RightSidebar({
                     Buka tanggal
                   </button>
                   <button
-                    className="ghost-button justify-center text-[#d24d75] hover:border-[#ffd4df] hover:bg-[#fff1f5]"
+                    className="ghost-button ghost-button-danger button-center"
                     type="button"
                     onClick={() => handleDeleteTask(task.id)}
                   >
@@ -156,42 +156,40 @@ export function RightSidebar({
         </div>
       </section>
 
-      <section className="surface-card panel-fade p-6" style={{ '--delay': '240ms' }}>
-        <div className="flex items-end justify-between gap-3">
+      <section className="surface-card panel-fade panel-delay-240 right-sidebar-card">
+        <div className="section-heading-row section-heading-row-end">
           <div>
             <p className="section-kicker">Done</p>
-            <h2 className="section-title mt-2">Daftar yang selesai</h2>
+            <h2 className="section-title section-title-offset">Daftar yang selesai</h2>
           </div>
-          <span className="mini-pill border-[#d7f5ea] bg-[#effcf7] text-[#17835c]">
+          <span className="mini-pill status-pill-done">
             {doneTasks.length} selesai
           </span>
         </div>
 
-        <div className="mt-5 space-y-3 xl:max-h-[360px] xl:overflow-auto xl:pr-1">
+        <div className="status-list-done">
           {doneTasks.length ? (
             doneTasks.map((task) => (
-              <article key={task.id} className="list-card border-[#d8f5ea] bg-[#effcf7]">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[18px] bg-[#17835c] text-white shadow-[0_20px_28px_-24px_rgba(23,131,92,0.9)]">
+              <article key={task.id} className="list-card done-task-card">
+                <div className="done-task-layout">
+                  <div className="done-check-icon">
                     <CheckIcon />
                   </div>
 
-                  <div className="min-w-0 flex-1">
-                    <p className="font-semibold leading-6 text-[#1b1635] line-through decoration-2">
-                      {task.title}
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="done-task-content">
+                    <p className="done-task-title">{task.title}</p>
+                    <div className="done-task-meta">
                       <PriorityBadge priority={task.priority} />
                       <StatusBadge done />
                     </div>
-                    <p className="mt-3 text-xs text-[#4b8d6d]">
+                    <p className="done-task-date">
                       Selesai pada {formatDateTime(task.completedAt ?? task.createdAt)}
                     </p>
                   </div>
                 </div>
 
                 <button
-                  className="ghost-button mt-4 w-full justify-center text-[#d24d75] hover:border-[#ffd4df] hover:bg-[#fff1f5]"
+                  className="ghost-button ghost-button-danger button-full done-delete-button"
                   type="button"
                   onClick={() => handleDeleteTask(task.id)}
                 >

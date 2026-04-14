@@ -39,27 +39,24 @@ export function CenterPanel({
   todayTaskCount,
 }) {
   return (
-    <section className="space-y-6">
-      <section
-        className="hero-card panel-fade overflow-hidden p-6 sm:p-7"
-        style={{ '--delay': '100ms' }}
-      >
-        <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
-          <div className="flex h-full flex-col">
+    <section className="dashboard-stack">
+      <section className="hero-card panel-fade panel-delay-100 dashboard-hero-section">
+        <div className="dashboard-hero-grid">
+          <div className="dashboard-hero-copy">
             <div>
               <p className="hero-kicker">Workspace</p>
-              <h2 className="mt-3 font-display text-4xl font-extrabold leading-[1.05] text-white sm:text-[3.25rem]">
+              <h2 className="dashboard-hero-title">
                 Organize your day in a softer, mobile-inspired dashboard.
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/72 sm:text-base">
+              <p className="dashboard-hero-description">
                 Semua fitur tetap ada: tambah agenda, atur prioritas, filter tanggal,
                 cek overdue, lihat yang selesai, dan simpan profil langsung di
                 browser.
               </p>
             </div>
 
-            <div className="mt-auto pt-6">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+            <div className="dashboard-hero-actions">
+              <div className="dashboard-hero-action-row">
                 <button
                   className="hero-primary-button"
                   type="button"
@@ -79,53 +76,43 @@ export function CenterPanel({
               </div>
 
               {feedback && (
-                <div
-                  className={`mt-5 rounded-[24px] border px-4 py-3 text-sm font-semibold ${feedbackClassName}`}
-                >
+                <div className={`feedback-banner ${feedbackClassName}`}>
                   {feedback.text}
                 </div>
               )}
             </div>
           </div>
 
-          <div className="relative flex h-full flex-col rounded-[32px] border border-white/12 bg-white/10 p-5 shadow-[0_32px_80px_-44px_rgba(24,10,82,0.8)] backdrop-blur-md">
-            <div className="absolute -right-10 top-10 h-28 w-28 rounded-full bg-white/12 blur-3xl" />
-            <div className="absolute -left-12 bottom-0 h-36 w-36 rounded-full bg-[#ffccf2]/20 blur-3xl" />
+          <div className="hero-glass-card">
+            <div className="hero-glass-orb hero-glass-orb-top" />
+            <div className="hero-glass-orb hero-glass-orb-bottom" />
 
-            <div className="relative flex h-full flex-col">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
-                <ClockIcon className="h-3.5 w-3.5" />
+            <div className="hero-glass-body">
+              <div className="hero-time-pill">
+                <ClockIcon className="icon-sm" />
                 {formatClock(now)}
               </div>
 
-              <div className="mt-6 flex flex-1 flex-col justify-center">
-                <div className="flex justify-center">
+              <div className="hero-progress-stack">
+                <div className="hero-progress-wrap">
                   <ProgressRing value={completionRate} />
                 </div>
 
-                <div className="mt-5 grid gap-3">
+                <div className="hero-mini-grid">
                   <div className="hero-mini-card">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
-                      Selected day
-                    </span>
-                    <p className="mt-1 font-display text-xl font-extrabold text-white">
-                      {formatCompactDate(selectedDate)}
-                    </p>
+                    <span className="hero-meta-label">Selected day</span>
+                    <p className="hero-meta-value">{formatCompactDate(selectedDate)}</p>
                   </div>
 
                   <div className="hero-mini-card">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
-                      Profile
-                    </span>
-                    <p className="mt-1 font-display text-lg font-extrabold text-white">
-                      {activeProfileName}
-                    </p>
-                    <p className="mt-1 text-sm text-white/70">{activeProfileRole}</p>
+                    <span className="hero-meta-label">Profile</span>
+                    <p className="hero-profile-value">{activeProfileName}</p>
+                    <p className="hero-profile-role">{activeProfileRole}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              <div className="hero-chip-grid">
                 <div className="hero-chip">
                   <span>Open</span>
                   <strong>{activeTasksCount}</strong>
@@ -143,7 +130,7 @@ export function CenterPanel({
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="dashboard-summary-grid">
           <SummaryTile
             label="Today"
             value={todayTaskCount}
@@ -164,30 +151,32 @@ export function CenterPanel({
         </div>
       </section>
 
-      <section className="surface-card panel-fade p-6" style={{ '--delay': '160ms' }}>
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <section className="surface-card panel-fade panel-delay-160 dashboard-agenda-section">
+        <div className="agenda-header">
           <div>
             <p className="section-kicker">Today&apos;s Tasks</p>
-            <h2 className="section-title mt-2">Agenda untuk {selectedDateLabel}</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#756f94]">
+            <h2 className="section-title section-title-offset">
+              Agenda untuk {selectedDateLabel}
+            </h2>
+            <p className="agenda-description">
               Tampilan ini tetap fokus pada tugas aktif di tanggal yang dipilih,
               dengan nuansa card layout yang lebih dekat ke referensi Figma.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="agenda-pill-row">
             <span className="mini-pill">
-              <SparkIcon className="h-3.5 w-3.5" />
+              <SparkIcon className="icon-sm" />
               {selectedTasks.length} active
             </span>
             <span className="mini-pill">
-              <CheckIcon className="h-3.5 w-3.5" />
+              <CheckIcon className="icon-sm" />
               {selectedDoneTasksCount} done
             </span>
           </div>
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-5">
+        <div className="date-strip-grid">
           {dateStrip.map((item) => {
             const isSelected = item.dateKey === selectedDate
             const isToday = item.dateKey === todayKey
@@ -199,24 +188,20 @@ export function CenterPanel({
                 type="button"
                 onClick={() => setSelectedDate(item.dateKey)}
               >
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em]">
-                  {item.weekday}
-                </span>
-                <strong className="mt-2 font-display text-2xl font-extrabold">
-                  {item.dayNumber}
-                </strong>
-                <span className="mt-1 text-sm">{item.month}</span>
-                {isToday && <span className="mt-3 h-1.5 w-1.5 rounded-full bg-current" />}
+                <span className="date-chip-label">{item.weekday}</span>
+                <strong className="date-chip-value">{item.dayNumber}</strong>
+                <span className="date-chip-month">{item.month}</span>
+                {isToday && <span className="date-chip-today-dot" />}
               </button>
             )
           })}
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="task-list">
           {selectedTasks.length ? (
             selectedTasks.map((task) => (
               <article key={task.id} className="task-card">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <div className="task-layout">
                   <button
                     className="task-check-button"
                     type="button"
@@ -226,19 +211,15 @@ export function CenterPanel({
                     <CheckIcon />
                   </button>
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                      <div className="min-w-0">
-                        <p className="font-display text-xl font-extrabold leading-snug text-[#1b1635]">
-                          {task.title}
-                        </p>
-                        <p className="mt-2 text-sm text-[#756f94]">
-                          Dibuat {formatDateTime(task.createdAt)}
-                        </p>
+                  <div className="task-content">
+                    <div className="task-header">
+                      <div className="task-copy">
+                        <p className="task-title">{task.title}</p>
+                        <p className="task-created">Dibuat {formatDateTime(task.createdAt)}</p>
                       </div>
 
                       <button
-                        className="ghost-button shrink-0 text-[#d24d75] hover:border-[#ffd4df] hover:bg-[#fff1f5]"
+                        className="ghost-button ghost-button-danger task-delete-button"
                         type="button"
                         onClick={() => handleDeleteTask(task.id)}
                       >
@@ -247,10 +228,10 @@ export function CenterPanel({
                       </button>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <div className="task-meta-row">
                       <PriorityBadge priority={task.priority} />
                       <span className="mini-pill">
-                        <CalendarIcon className="h-3.5 w-3.5" />
+                        <CalendarIcon className="icon-sm" />
                         {formatCompactDate(task.dueDate)}
                       </span>
                       <StatusBadge overdue={isOverdue(task, todayKey)} />

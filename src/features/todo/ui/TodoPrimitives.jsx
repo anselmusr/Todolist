@@ -6,7 +6,7 @@ export function PriorityBadge({ priority }) {
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${meta.badgeClassName}`}
+      className={`badge-base ${meta.badgeClassName}`}
     >
       {meta.label}
     </span>
@@ -15,15 +15,15 @@ export function PriorityBadge({ priority }) {
 
 export function StatusBadge({ overdue = false, done = false }) {
   const className = done
-    ? 'border-[#d7f5ea] bg-[#effcf7] text-[#17835c]'
+    ? 'status-badge-done'
     : overdue
-      ? 'border-[#ffd4df] bg-[#fff1f5] text-[#d24d75]'
-      : 'border-[#ddd3ff] bg-[#f2eeff] text-[#5b3de3]'
+      ? 'status-badge-overdue'
+      : 'status-badge-track'
   const label = done ? 'Done' : overdue ? 'Overdue' : 'On Track'
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${className}`}
+      className={`badge-base ${className}`}
     >
       {label}
     </span>
@@ -32,33 +32,43 @@ export function StatusBadge({ overdue = false, done = false }) {
 
 export function EmptyState({ title, description }) {
   return (
-    <div className="rounded-[28px] border border-dashed border-[#d9d0ff] bg-white/70 px-5 py-8 text-center">
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f2eeff] text-[#6c4df6]">
-        <SparkIcon className="h-6 w-6" />
+    <div className="empty-state-card">
+      <div className="empty-state-icon">
+        <SparkIcon className="icon-md" />
       </div>
-      <p className="mt-4 font-display text-xl font-extrabold text-[#1b1635]">{title}</p>
-      <p className="mt-2 text-sm leading-6 text-[#756f94]">{description}</p>
+      <p className="empty-state-title">{title}</p>
+      <p className="empty-state-description">{description}</p>
     </div>
   )
 }
 
 export function ProgressRing({ value }) {
   const safeValue = Math.max(0, Math.min(100, value))
+  const radius = 42
+  const circumference = 2 * Math.PI * radius
+  const dashOffset = circumference * (1 - safeValue / 100)
 
   return (
     <div
       className="progress-ring"
-      style={{
-        background: `conic-gradient(#ffffff ${safeValue * 3.6}deg, rgba(255,255,255,0.18) 0deg)`,
-      }}
+      role="img"
+      aria-label={`${safeValue}% completed`}
     >
+      <svg className="progress-ring__svg" viewBox="0 0 100 100" aria-hidden="true">
+        <circle className="progress-ring__track" cx="50" cy="50" r={radius} />
+        <circle
+          className="progress-ring__progress"
+          cx="50"
+          cy="50"
+          r={radius}
+          strokeDasharray={circumference}
+          strokeDashoffset={dashOffset}
+        />
+      </svg>
+
       <div className="progress-ring__inner">
-        <span className="font-display text-3xl font-extrabold text-white">
-          {safeValue}%
-        </span>
-        <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/72">
-          Completed
-        </span>
+        <span className="progress-ring__value">{safeValue}%</span>
+        <span className="progress-ring__label">Completed</span>
       </div>
     </div>
   )
@@ -67,18 +77,16 @@ export function ProgressRing({ value }) {
 export function SummaryTile({ label, value, detail, tone = 'violet' }) {
   const toneClassName =
     tone === 'mint'
-      ? 'border-[#d7f5ea] bg-[#effcf7] text-[#17835c]'
+      ? 'summary-tile-mint'
       : tone === 'peach'
-        ? 'border-[#ffe3c4] bg-[#fff5e9] text-[#c87021]'
-        : 'border-[#ddd3ff] bg-[#f2eeff] text-[#5b3de3]'
+        ? 'summary-tile-peach'
+        : 'summary-tile-violet'
 
   return (
-    <article className={`stat-card h-full ${toneClassName}`}>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] opacity-75">
-        {label}
-      </p>
-      <p className="mt-3 font-display text-3xl font-extrabold">{value}</p>
-      <p className="mt-2 text-sm opacity-80">{detail}</p>
+    <article className={`stat-card summary-tile ${toneClassName}`}>
+      <p className="summary-tile-label">{label}</p>
+      <p className="summary-tile-value">{value}</p>
+      <p className="summary-tile-detail">{detail}</p>
     </article>
   )
 }

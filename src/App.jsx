@@ -22,19 +22,19 @@ const RightSidebar = lazy(() =>
 
 function SidebarFallback() {
   return (
-    <div className="space-y-6">
-      <div className="surface-card animate-pulse p-6">
-        <div className="h-6 w-40 rounded-full bg-[#ebe4ff]" />
-        <div className="mt-4 h-20 rounded-[28px] bg-[#f4f0ff]" />
-        <div className="mt-5 space-y-3">
-          <div className="h-12 rounded-[22px] bg-[#f4f0ff]" />
-          <div className="h-12 rounded-[22px] bg-[#f4f0ff]" />
+    <div className="fallback-stack">
+      <div className="surface-card sidebar-fallback-card">
+        <div className="sidebar-fallback-title" />
+        <div className="sidebar-fallback-panel" />
+        <div className="sidebar-fallback-lines">
+          <div className="sidebar-fallback-line" />
+          <div className="sidebar-fallback-line" />
         </div>
       </div>
 
-      <div className="surface-card animate-pulse p-6">
-        <div className="h-5 w-32 rounded-full bg-[#ebe4ff]" />
-        <div className="mt-4 h-28 rounded-[24px] bg-[#f7f4ff]" />
+      <div className="surface-card sidebar-fallback-card">
+        <div className="sidebar-fallback-mini-title" />
+        <div className="sidebar-fallback-block" />
       </div>
     </div>
   )
@@ -42,26 +42,26 @@ function SidebarFallback() {
 
 function CenterFallback() {
   return (
-    <div className="space-y-6">
-      <div className="hero-card animate-pulse p-6 sm:p-7">
-        <div className="h-6 w-40 rounded-full bg-white/16" />
-        <div className="mt-4 h-14 max-w-xl rounded-[28px] bg-white/14" />
-        <div className="mt-3 h-5 max-w-2xl rounded-full bg-white/12" />
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          <div className="h-28 rounded-[26px] bg-white/12" />
-          <div className="h-28 rounded-[26px] bg-white/12" />
-          <div className="h-28 rounded-[26px] bg-white/12" />
+    <div className="fallback-stack">
+      <div className="hero-card center-fallback-card">
+        <div className="center-fallback-kicker" />
+        <div className="center-fallback-heading" />
+        <div className="center-fallback-copy" />
+        <div className="center-fallback-grid">
+          <div className="center-fallback-stat" />
+          <div className="center-fallback-stat" />
+          <div className="center-fallback-stat" />
         </div>
       </div>
 
-      <div className="surface-card animate-pulse p-6">
-        <div className="h-6 w-52 rounded-full bg-[#ebe4ff]" />
-        <div className="mt-5 grid gap-3 sm:grid-cols-5">
-          <div className="h-28 rounded-[28px] bg-[#f7f4ff]" />
-          <div className="h-28 rounded-[28px] bg-[#f7f4ff]" />
-          <div className="h-28 rounded-[28px] bg-[#f7f4ff]" />
-          <div className="h-28 rounded-[28px] bg-[#f7f4ff]" />
-          <div className="h-28 rounded-[28px] bg-[#f7f4ff]" />
+      <div className="surface-card date-fallback-card">
+        <div className="date-fallback-title" />
+        <div className="date-fallback-grid">
+          <div className="date-fallback-chip" />
+          <div className="date-fallback-chip" />
+          <div className="date-fallback-chip" />
+          <div className="date-fallback-chip" />
+          <div className="date-fallback-chip" />
         </div>
       </div>
     </div>
@@ -73,12 +73,12 @@ function App() {
   const todo = useTodoApp()
 
   return (
-    <main className="min-h-screen overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
+    <main className="app-shell">
       <div className="app-noise app-noise-one" />
       <div className="app-noise app-noise-two" />
 
-      <div className="mx-auto max-w-[1460px]">
-        <div className="grid gap-6 xl:grid-cols-[290px_minmax(0,1fr)_360px]">
+      <div className="app-frame">
+        <div className="app-grid">
           <Suspense fallback={<SidebarFallback />}>
             <LeftSidebar
               activeProfileName={todo.activeProfileName}
