@@ -6,6 +6,50 @@ import {
   PriorityBadge,
   StatusBadge,
 } from '../ui/TodoPrimitives'
+import {
+  cn,
+  fieldBaseClass,
+  fieldLabelClass,
+  ghostButtonClass,
+  listCardClass,
+  miniPillClass,
+  panelDelayClassNames,
+  panelFadeClass,
+  primaryButtonClass,
+  priorityOptionActiveClass,
+  priorityOptionBaseClass,
+  secondaryButtonClass,
+  sectionKickerClass,
+  sectionTitleClass,
+  surfaceCardClass,
+  ghostDangerClass,
+} from '../ui/classes'
+
+const formCardClass = cn(
+  surfaceCardClass,
+  panelFadeClass,
+  panelDelayClassNames[140],
+  'p-6',
+)
+
+const overdueCardClass = cn(
+  surfaceCardClass,
+  panelFadeClass,
+  panelDelayClassNames[200],
+  'p-6',
+)
+
+const doneCardClass = cn(
+  surfaceCardClass,
+  panelFadeClass,
+  panelDelayClassNames[240],
+  'p-6',
+)
+
+const statusPillBaseClass = cn(
+  miniPillClass,
+  'min-h-[3.15rem] flex-col justify-center gap-0 px-3 pb-2 pt-3 text-center leading-none',
+)
 
 // Rail kanan memusatkan aksi create task dan daftar status sekunder seperti overdue/done.
 export function RightSidebar({
@@ -19,34 +63,34 @@ export function RightSidebar({
   updateForm,
 }) {
   return (
-    <aside className="sidebar-stack">
-      <section className="surface-card panel-fade panel-delay-140 right-sidebar-card">
-        <div className="section-heading-row section-heading-row-start">
+    <aside className="space-y-6">
+      <section className={formCardClass}>
+        <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="section-kicker">Add Project</p>
-            <h2 className="section-title section-title-offset">Create a new task card</h2>
-            <p className="panel-intro-copy">
+            <p className={sectionKickerClass}>Add Project</p>
+            <h2 className={cn(sectionTitleClass, 'mt-2')}>Create a new task card</h2>
+            <p className="mt-2 text-sm leading-6 text-[#756f94]">
               Masukkan agenda, pilih tanggal, lalu tentukan prioritas sebelum
               menekan submit.
             </p>
           </div>
         </div>
 
-        <form className="task-form-layout" onSubmit={handleSubmit}>
-          <label className="field-group">
-            <span className="field-label">Task detail</span>
+        <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
+          <label className="block">
+            <span className={fieldLabelClass}>Task detail</span>
             <textarea
-              className="field-base textarea-field"
+              className={cn(fieldBaseClass, 'resize-none')}
               placeholder="Contoh: Selesaikan wireframe homepage untuk presentasi besok pagi."
               value={form.title}
               onChange={(event) => updateForm('title', event.target.value)}
             />
           </label>
 
-          <label className="field-group">
-            <span className="field-label">Due date</span>
+          <label className="block">
+            <span className={fieldLabelClass}>Due date</span>
             <input
-              className="field-base"
+              className={fieldBaseClass}
               type="date"
               value={form.dueDate}
               onChange={(event) => updateForm('dueDate', event.target.value)}
@@ -54,17 +98,18 @@ export function RightSidebar({
           </label>
 
           <div>
-            <span className="field-label">Priority</span>
-            <div className="priority-grid">
+            <span className={fieldLabelClass}>Priority</span>
+            <div className="mt-3 grid grid-cols-3 gap-3">
               {Object.entries(PRIORITY_META).map(([priorityKey, meta]) => {
                 const isSelected = form.priority === priorityKey
 
                 return (
                   <button
                     key={priorityKey}
-                    className={`priority-option ${meta.buttonClassName} ${
-                      isSelected ? 'priority-option-active' : ''
-                    }`}
+                    className={cn(
+                      priorityOptionBaseClass,
+                      isSelected ? priorityOptionActiveClass : meta.buttonClassName,
+                    )}
                     type="button"
                     onClick={() => updateForm('priority', priorityKey)}
                   >
@@ -75,43 +120,53 @@ export function RightSidebar({
             </div>
           </div>
 
-          <div className="button-stack">
-            <button className="primary-button button-full" type="submit">
+          <div className="grid gap-3">
+            <button className={cn(primaryButtonClass, 'w-full justify-center')} type="submit">
               Submit task
             </button>
           </div>
         </form>
       </section>
 
-      <section className="surface-card panel-fade panel-delay-200 right-sidebar-card">
-        <div className="section-heading-row section-heading-row-end">
+      <section className={overdueCardClass}>
+        <div className="flex items-end justify-between gap-3">
           <div>
-            <p className="section-kicker">Overdue</p>
-            <h2 className="section-title section-title-offset">Agenda yang terlambat</h2>
+            <p className={sectionKickerClass}>Overdue</p>
+            <h2 className={cn(sectionTitleClass, 'mt-2')}>Agenda yang terlambat</h2>
           </div>
-          <span className="mini-pill status-pill status-pill-overdue">
-            <span className="status-pill-count">{overdueTasks.length}</span>
-            <span className="status-pill-label">item</span>
+          <span
+            className={cn(
+              statusPillBaseClass,
+              'min-w-[3.35rem] border-[#ffe3c4] bg-[#fff5e9] text-[#c87021]',
+            )}
+          >
+            <span className="block font-display text-sm font-extrabold leading-none [font-variant-numeric:tabular-nums]">
+              {overdueTasks.length}
+            </span>
+            <span className="mt-1 block text-[11px] font-semibold leading-none">item</span>
           </span>
         </div>
 
-        <div className="status-list-overdue">
+        <div className="mt-5 space-y-3 xl:max-h-[340px] xl:overflow-auto xl:pr-1">
           {overdueTasks.length ? (
             overdueTasks.map((task) => (
-              <article key={task.id} className="list-card overdue-task-card">
-                <div className="status-card-header">
-                  <div className="status-card-copy">
-                    <p className="overdue-task-title">{task.title}</p>
-                    <p className="overdue-task-date">
+              <article
+                key={task.id}
+                className={cn(listCardClass, 'border-[#ffe8d4] bg-[#fff8ef]')}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-semibold leading-6 text-[#1b1635]">{task.title}</p>
+                    <p className="mt-2 text-sm text-[#c87021]">
                       Deadline {formatCompactDate(task.dueDate)}
                     </p>
                   </div>
                   <PriorityBadge priority={task.priority} />
                 </div>
 
-                <div className="status-card-actions">
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   <button
-                    className="secondary-button button-center"
+                    className={cn(secondaryButtonClass, 'justify-center')}
                     type="button"
                     onClick={() => {
                       setSelectedDate(task.dueDate)
@@ -121,7 +176,11 @@ export function RightSidebar({
                     Buka tanggal
                   </button>
                   <button
-                    className="ghost-button ghost-button-danger button-center"
+                    className={cn(
+                      ghostButtonClass,
+                      ghostDangerClass,
+                      'justify-center',
+                    )}
                     type="button"
                     onClick={() => handleDeleteTask(task.id)}
                   >
@@ -139,41 +198,59 @@ export function RightSidebar({
         </div>
       </section>
 
-      <section className="surface-card panel-fade panel-delay-240 right-sidebar-card">
-        <div className="section-heading-row section-heading-row-end">
+      <section className={doneCardClass}>
+        <div className="flex items-end justify-between gap-3">
           <div>
-            <p className="section-kicker">Done</p>
-            <h2 className="section-title section-title-offset">Daftar yang selesai</h2>
+            <p className={sectionKickerClass}>Done</p>
+            <h2 className={cn(sectionTitleClass, 'mt-2')}>Daftar yang selesai</h2>
           </div>
-          <span className="mini-pill status-pill status-pill-done">
-            <span className="status-pill-count">{doneTasks.length}</span>
-            <span className="status-pill-label">selesai</span>
+          <span
+            className={cn(
+              statusPillBaseClass,
+              'min-w-[4.6rem] border-[#d7f5ea] bg-[#effcf7] text-[#17835c]',
+            )}
+          >
+            <span className="block font-display text-sm font-extrabold leading-none [font-variant-numeric:tabular-nums]">
+              {doneTasks.length}
+            </span>
+            <span className="mt-1 block text-[11px] font-semibold leading-none">
+              selesai
+            </span>
           </span>
         </div>
 
-        <div className="status-list-done">
+        <div className="mt-5 space-y-3 xl:max-h-[360px] xl:overflow-auto xl:pr-1">
           {doneTasks.length ? (
             doneTasks.map((task) => (
-              <article key={task.id} className="list-card done-task-card">
-                <div className="done-task-layout">
-                  <div className="done-check-icon">
+              <article
+                key={task.id}
+                className={cn(listCardClass, 'border-[#d8f5ea] bg-[#effcf7]')}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[18px] bg-[#17835c] text-white shadow-[0_20px_28px_-24px_rgba(23,131,92,0.9)]">
                     <CheckIcon />
                   </div>
 
-                  <div className="done-task-content">
-                    <p className="done-task-title">{task.title}</p>
-                    <div className="done-task-meta">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold leading-6 text-[#1b1635] line-through decoration-2">
+                      {task.title}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
                       <PriorityBadge priority={task.priority} />
                       <StatusBadge done />
                     </div>
-                    <p className="done-task-date">
+                    <p className="mt-3 text-xs text-[#4b8d6d]">
                       Selesai pada {formatDateTime(task.completedAt ?? task.createdAt)}
                     </p>
                   </div>
                 </div>
 
                 <button
-                  className="ghost-button ghost-button-danger button-full done-delete-button"
+                  className={cn(
+                    ghostButtonClass,
+                    ghostDangerClass,
+                    'mt-4 w-full justify-center',
+                  )}
                   type="button"
                   onClick={() => handleDeleteTask(task.id)}
                 >

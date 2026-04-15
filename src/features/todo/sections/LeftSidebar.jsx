@@ -3,6 +3,36 @@ import { useState } from 'react'
 import { formatCompactDate } from '../utils/date'
 import { ClockIcon, CalendarIcon } from '../ui/TodoIcons'
 import { PriorityBadge, SummaryTile } from '../ui/TodoPrimitives'
+import {
+  cn,
+  dangerButtonClass,
+  fieldBaseClass,
+  fieldLabelClass,
+  ghostButtonClass,
+  iconSmClass,
+  miniPillClass,
+  panelDelayClassNames,
+  panelFadeClass,
+  secondaryButtonClass,
+  sectionKickerClass,
+  sectionTitleClass,
+  softIconClass,
+  surfaceCardClass,
+} from '../ui/classes'
+
+const introCardClass = cn(
+  surfaceCardClass,
+  panelFadeClass,
+  panelDelayClassNames[60],
+  'overflow-hidden p-6',
+)
+
+const focusCardClass = cn(
+  surfaceCardClass,
+  panelFadeClass,
+  panelDelayClassNames[120],
+  'p-6',
+)
 
 // Rail kiri menampung identitas user, statistik singkat, dan shortcut planner.
 export function LeftSidebar({
@@ -18,17 +48,17 @@ export function LeftSidebar({
   const shouldShowProfileFields = isEditingProfile || !isProfileComplete
 
   return (
-    <aside className="sidebar-stack">
-      <section className="surface-card panel-fade panel-delay-60 left-sidebar-intro-card">
-        <div className="sidebar-card-header">
+    <aside className="space-y-6">
+      <section className={introCardClass}>
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="sidebar-app-title">
+            <h1 className="mt-2 font-display text-[1.75rem] font-extrabold leading-tight text-[#1b1635]">
               Task Management & To-do List App
             </h1>
           </div>
         </div>
 
-        <div className="profile-summary-grid">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
           <SummaryTile
             label="Open tasks"
             value={activeTasksCount}
@@ -44,11 +74,11 @@ export function LeftSidebar({
 
         {shouldShowProfileFields ? (
           <>
-            <div className="profile-field-stack">
-              <label className="field-group">
-                <span className="field-label">Display name</span>
+            <div className="mt-6 space-y-4">
+              <label className="block">
+                <span className={fieldLabelClass}>Display name</span>
                 <input
-                  className="field-base"
+                  className={fieldBaseClass}
                   type="text"
                   placeholder="Masukkan nama user"
                   value={profile.name}
@@ -56,10 +86,10 @@ export function LeftSidebar({
                 />
               </label>
 
-              <label className="field-group">
-                <span className="field-label">Role</span>
+              <label className="block">
+                <span className={fieldLabelClass}>Role</span>
                 <input
-                  className="field-base"
+                  className={fieldBaseClass}
                   type="text"
                   placeholder="Masukkan jabatan"
                   value={profile.role}
@@ -68,26 +98,26 @@ export function LeftSidebar({
               </label>
             </div>
 
-            <div className="profile-edit-row">
+            <div className="mt-4 flex items-center justify-center gap-3">
               {isProfileComplete ? (
                 <button
-                  className="secondary-button"
+                  className={secondaryButtonClass}
                   type="button"
                   onClick={() => setIsEditingProfile(false)}
                 >
                   Selesai edit
                 </button>
               ) : (
-                <p className="profile-edit-hint">
+                <p className="text-center text-sm leading-6 text-[#7a729c]">
                   Isi nama dan role agar form bisa disembunyikan otomatis.
                 </p>
               )}
             </div>
           </>
         ) : (
-          <div className="profile-toolbar">
+          <div className="mt-5 flex justify-center">
             <button
-              className="ghost-button"
+              className={ghostButtonClass}
               type="button"
               onClick={() => setIsEditingProfile(true)}
             >
@@ -97,41 +127,45 @@ export function LeftSidebar({
         )}
       </section>
 
-      <section className="surface-card panel-fade panel-delay-120 left-sidebar-focus-card">
-        <div className="section-heading-row section-heading-row-center">
+      <section className={focusCardClass}>
+        <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="section-kicker">Quick Focus</p>
-            <h2 className="section-title section-title-offset">Planner shortcuts</h2>
+            <p className={sectionKickerClass}>Quick Focus</p>
+            <h2 className={cn(sectionTitleClass, 'mt-2')}>Planner shortcuts</h2>
           </div>
-          <div className="soft-icon soft-icon-peach">
+          <div className={cn(softIconClass, 'bg-[#fff5e9] text-[#c87021]')}>
             <ClockIcon />
           </div>
         </div>
 
-        <div className="planner-focus-card">
-          <p className="focus-kicker">Next up</p>
+        <div className="mt-5 rounded-[28px] border border-[#ebe4ff] bg-[#faf8ff] p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#857db1]">
+            Next up
+          </p>
           {nextTask ? (
             <>
-              <p className="focus-task-title">{nextTask.title}</p>
-              <div className="focus-meta-row">
+              <p className="mt-3 font-display text-xl font-extrabold text-[#1b1635]">
+                {nextTask.title}
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
                 <PriorityBadge priority={nextTask.priority} />
-                <span className="mini-pill">
-                  <CalendarIcon className="icon-sm" />
+                <span className={miniPillClass}>
+                  <CalendarIcon className={iconSmClass} />
                   {formatCompactDate(nextTask.dueDate)}
                 </span>
               </div>
             </>
           ) : (
-            <p className="focus-empty-text">
+            <p className="mt-3 text-sm leading-6 text-[#756f94]">
               Belum ada agenda aktif. Tambahkan task baru untuk mulai mengatur
               hari ini.
             </p>
           )}
         </div>
 
-        <div className="focus-action-stack">
+        <div className="mt-5 space-y-3">
           <button
-            className="danger-button button-full"
+            className={cn(dangerButtonClass, 'w-full justify-center')}
             type="button"
             onClick={handleDeleteAll}
           >
